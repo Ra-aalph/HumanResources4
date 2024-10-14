@@ -47,7 +47,7 @@ const Incentives = () => {
 
   const fetchIncentives = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/incentives");
+      const response = await axios.get("http://localhost:8055/incentives");
       if (response.data.length === 0) {
         console.log("No employee data available");
       }
@@ -87,7 +87,7 @@ const Incentives = () => {
         // Update existing employee
         const updatedEmployee = { ...formData, totalSalary };
         await axios.put(
-          `http://localhost:3001/incentives/${employees[editIndex]._id}`,
+          `http://localhost:8055/incentives/${employees[editIndex]._id}`,
           updatedEmployee
         );
         const updatedEmployees = [...employees];
@@ -99,7 +99,7 @@ const Incentives = () => {
         // Create new employee
         const newEmployee = { ...formData, totalSalary };
         const response = await axios.post(
-          "http://localhost:3001/incentives",
+          "http://localhost:8055/incentives",
           newEmployee
         );
         setEmployees((prevEmployees) => [...prevEmployees, response.data]);
@@ -119,7 +119,7 @@ const Incentives = () => {
     }
     try {
       await axios.delete(
-        `http://localhost:3001/incentives/${employees[index]._id}`
+        `http://localhost:8055/incentives/${employees[index]._id}`
       );
       setEmployees((prevEmployees) =>
         prevEmployees.filter((_, i) => i !== index)

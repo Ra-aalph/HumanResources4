@@ -51,7 +51,7 @@ const OvertimeManagement = () => {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/overtimes");
+      const response = await axios.get("http://localhost:8055/overtimes");
       setEmployees(response.data);
     } catch (err) {
       console.error("Error fetching employees:", err);
@@ -73,7 +73,7 @@ const OvertimeManagement = () => {
     try {
       if (isEditing) {
         await axios.put(
-          `http://localhost:3001/overtimes/${employees[currentIndex]._id}`,
+          `http://localhost:8055/overtimes/${employees[currentIndex]._id}`,
           {
             name,
             position,
@@ -88,7 +88,7 @@ const OvertimeManagement = () => {
           show: true,
         });
       } else {
-        await axios.post("http://localhost:3001/overtimes", {
+        await axios.post("http://localhost:8055/overtimes", {
           name,
           position,
           baseSalary,
@@ -140,7 +140,7 @@ const OvertimeManagement = () => {
     }
     try {
       await axios.delete(
-        `http://localhost:3001/overtimes/${employees[index]._id}`
+        `http://localhost:8055/overtimes/${employees[index]._id}`
       );
       fetchEmployees();
       setNotification({

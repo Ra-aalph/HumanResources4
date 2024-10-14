@@ -18,7 +18,7 @@ app.use(cors());
 mongoose.connect(process.env.MONGODB_URL); // Use environment variable for MongoDB URI
 
 const JWT_SECRET = process.env.JWT_SECRET; // Use environment variable for JWT secret
-const PORT = process.env.PORT || 3001; // Use environment variable for port
+const PORT = process.env.PORT || 8055; // Use environment variable for port
 
 // Middleware 
 const authenticateJWT = (req, res, next) => {

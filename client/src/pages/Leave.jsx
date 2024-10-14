@@ -37,7 +37,7 @@ const Leave = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/leaves");
+        const response = await axios.get("http://localhost:8055/leaves");
         setLeaves(response.data);
         setFilteredLeaves(response.data); // Initialize filtered leaves
       } catch (error) {
@@ -72,7 +72,7 @@ const Leave = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3001/leaves/${editingId}`, form);
+        await axios.put(`http://localhost:8055/leaves/${editingId}`, form);
         setLeaves((prev) =>
           prev.map((leave) =>
             leave._id === editingId ? { ...form, _id: editingId } : leave
@@ -89,7 +89,7 @@ const Leave = () => {
         });
         setEditingId(null);
       } else {
-        const response = await axios.post("http://localhost:3001/leaves", form);
+        const response = await axios.post("http://localhost:8055/leaves", form);
         setLeaves([...leaves, { ...form, _id: response.data._id }]);
         setFilteredLeaves([...leaves, { ...form, _id: response.data._id }]); // For new data addition
         setNotification({
@@ -124,7 +124,7 @@ const Leave = () => {
       return; // If the user cancels, exit the function
     }
     try {
-      await axios.delete(`http://localhost:3001/leaves/${_id}`);
+      await axios.delete(`http://localhost:8055/leaves/${_id}`);
       setLeaves(leaves.filter((leave) => leave._id !== _id));
       setFilteredLeaves(filteredLeaves.filter((leave) => leave._id !== _id)); // Update filtered list
       setNotification({
