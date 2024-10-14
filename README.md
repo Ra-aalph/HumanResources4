@@ -1,4 +1,4 @@
-HOSPITAL MANAGEMENT SYSTEM: HUMAN RESOURCES 4 (Compensation Management and Benefits Administration) with AI Predictive Analytics and Machine Learning for Integrated Overtime, Incentives, and Benefits Forecasting
+<center>HOSPITAL MANAGEMENT SYSTEM: HUMAN RESOURCES 4 (Compensation Management and Benefits Administration) with AI Predictive Analytics and Machine Learning for Integrated Overtime, Incentives, and Benefits Forecasting</center>
 
 TechStack: MERN (MongoDB, ExpressJS, React, NodeJS)
 
