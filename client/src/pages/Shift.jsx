@@ -228,7 +228,7 @@ const Shift = () => {
             {/* Base Salary Field */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-700">
-                Base Daily Salary
+                Base Salary
               </label>
               <input
                 type="text"
