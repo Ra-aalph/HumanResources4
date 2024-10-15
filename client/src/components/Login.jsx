@@ -81,7 +81,7 @@ function Login({ onLogin }) {
             className="h-20 w-20 mr-4"
           />
           <div className="text-left">
-            <h1 className="text-3xl font-bold text-[#EA0D10]">HR DEPT.</h1>
+          <h1 className="text-3xl font-bold text-[#EA0D10]">HR DEPARTMENT</h1>
             <h2 className="text-lg text-[#090367]">Admin Login</h2>
           </div>
         </div>
