@@ -401,6 +401,9 @@ const OvertimeManagement = () => {
             </tbody>
           </table>
         </div>
+        <footer className="bg-white mt-36 p-4 rounded-md shadow-md">
+          <p>2024 Hospital Management System. All Rights Reserved.</p>
+        </footer>
       </div>
     </div>
   );
