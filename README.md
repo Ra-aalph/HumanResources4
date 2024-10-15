@@ -11,7 +11,7 @@ Hospital Management System: Human Resources 4 (Compensation Management and Benef
 <strong>Key Features:</strong>
 
 
-<strong>•Compensation Management:</strong>
+<strong>• Compensation Management:</strong>
 
  - Overtime Management
  - Shift Differential Management
