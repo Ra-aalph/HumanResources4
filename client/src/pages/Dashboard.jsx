@@ -234,8 +234,9 @@ const Dashboard = () => {
           </div>
 
           {/* Leave Management Table */}
+          <h3 className="text-md font-semibold mb-2">Employee Leave List</h3>
           <div className="overflow-x-auto bg-white rounded-lg shadow-md table-container">
-            <h3 className="text-md font-semibold mb-2">Employee Leave List</h3>
+           
             <table className="min-w-full bg-white shadow-md rounded-lg">
               <thead className="bg-gray-100">
                 <tr className="bg-[#090367] text-white text-xs sm:text-sm leading-normal">
