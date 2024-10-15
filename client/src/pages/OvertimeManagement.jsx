@@ -13,6 +13,7 @@ const OvertimeManagement = () => {
     baseSalary: 0,
     overtimeHours: 0,
     totalSalary: 0,
+    predictedOvertime: 0, // Added for predicted overtime
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(null);
@@ -32,9 +33,19 @@ const OvertimeManagement = () => {
   ];
 
   const calculateTotalSalary = (baseSalary, overtimeHours) => {
-    const overtimeRate = 1.5; //overtime hour rates
-    const overtimePay = overtimeHours * (baseSalary / 264) * overtimeRate;  //264 - working hours per month
+    const overtimeRate = 1.5; // Overtime hour rates
+    const overtimePay = overtimeHours * (baseSalary / 264) * overtimeRate; // 264 - working hours per month
     return baseSalary + overtimePay;
+  };
+
+  const predictOvertime = (historicalData) => {
+    // Simple predictive model based on average historical overtime hours
+    if (historicalData.length === 0) return 0;
+    const totalOvertime = historicalData.reduce(
+      (sum, entry) => sum + entry.overtimeHours,
+      0
+    );
+    return totalOvertime / historicalData.length; // Average overtime
   };
 
   const formatCurrency = (amount) => {
@@ -53,6 +64,9 @@ const OvertimeManagement = () => {
     try {
       const response = await axios.get("http://localhost:8055/overtimes");
       setEmployees(response.data);
+      const historicalData = response.data; // Assume historical data is here
+      const predictedOvertime = predictOvertime(historicalData);
+      setFormData((prev) => ({ ...prev, predictedOvertime }));
     } catch (err) {
       console.error("Error fetching employees:", err);
     }
@@ -117,6 +131,7 @@ const OvertimeManagement = () => {
       baseSalary: 0,
       overtimeHours: 0,
       totalSalary: 0,
+      predictedOvertime: 0, // Reset predicted overtime
     });
     setIsEditing(false);
     setCurrentIndex(null);
@@ -167,7 +182,7 @@ const OvertimeManagement = () => {
   );
 
   return (
-    <div className="bg-[#F0F0F0]  mt-16">
+    <div className="bg-[#F0F0F0] mt-16">
       <div className="bg-[#F0F0F0] md:grid-cols-2 gap-4 mt-8 p-4">
         <div
           className={`fixed top-30 right-5 p-4 border rounded flex items-center space-x-2 transition-opacity duration-500 ease-in-out ${
@@ -194,7 +209,7 @@ const OvertimeManagement = () => {
             Overtime Management
           </h1>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-700">
                 Search Employee
@@ -238,19 +253,35 @@ const OvertimeManagement = () => {
                   setFormData({
                     ...formData,
                     position: e.target.value,
-                    baseSalary: selectedPosition?.baseSalary || 0,
+                    baseSalary: selectedPosition
+                      ? selectedPosition.baseSalary
+                      : 0,
                   });
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
                 required
               >
                 <option value="">Select Position</option>
-                {positions.map((pos, index) => (
-                  <option key={index} value={pos.position}>
-                    {pos.position}
+                {positions.map((position) => (
+                  <option key={position.position} value={position.position}>
+                    {position.position}
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700">
+                Base Salary
+              </label>
+              <input
+                type="number"
+                placeholder="Base Salary"
+                name="baseSalary"
+                value={formData.baseSalary}
+                readOnly // Made read-only, will be set based on position selection
+                className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100"
+              />
             </div>
 
             <div>
@@ -259,15 +290,48 @@ const OvertimeManagement = () => {
               </label>
               <input
                 type="number"
+                placeholder="Overtime Hours"
                 name="overtimeHours"
                 value={formData.overtimeHours}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
-                min="0"
                 required
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700">
+                Total Salary
+              </label>
+              <input
+                type="text"
+                placeholder="Total Salary"
+                name="totalSalary"
+                value={formatCurrency(
+                  calculateTotalSalary(
+                    formData.baseSalary,
+                    formData.overtimeHours
+                  )
+                )}
+                readOnly
+                className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100"
+              />
+            </div>
+
+            {/* Predicted Overtime */}
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700">
+                Predicted Overtime (Next Month)
+              </label>
+              <input
+                type="text"
+                placeholder="Predicted Overtime"
+                name="predictedOvertime"
+                value={formatCurrency(formData.predictedOvertime)}
+                readOnly
+                className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100"
+              />
+            </div>
             <div className="mt-2 ml-8">
               <button
                 type="submit"
@@ -279,25 +343,23 @@ const OvertimeManagement = () => {
           </div>
         </form>
 
+        {/* Employees List */}
         <div className="overflow-x-auto bg-white rounded-lg shadow-md table-container">
           <table className="min-w-full bg-white shadow-md rounded-lg">
             <thead className="bg-gray-100">
               <tr className="bg-[#090367] text-white text-xs sm:text-sm leading-normal">
                 <th className="border px-4 sm:px-6 py-2">Employee Name</th>
                 <th className="border px-4 sm:px-6 py-2">Position</th>
-                <th className="border px-4 sm:px-6 py-2">Salary(Monthly)</th>
+                <th className="border px-4 sm:px-6 py-2">Base Salary</th>
                 <th className="border px-4 sm:px-6 py-2">Overtime Hours</th>
                 <th className="border px-4 sm:px-6 py-2">Total Salary</th>
                 <th className="border px-4 sm:px-6 py-2">Actions</th>
               </tr>
             </thead>
-            <tbody className="text-xs sm:text-sm">
+            <tbody className=" text-xs sm:text-sm">
               {filteredEmployees.length > 0 ? (
                 filteredEmployees.map((employee, index) => (
-                  <tr
-                    key={employee._id}
-                    className="text-xs sm:text-sm bg-white hover:bg-gray-100"
-                  >
+                  <tr key={employee._id} className="text-xs sm:text-sm bg-white hover:bg-gray-100">
                     <td className="border border-gray-300 p-2">
                       {employee.name}
                     </td>
@@ -310,19 +372,19 @@ const OvertimeManagement = () => {
                     <td className="border border-gray-300 p-2">
                       {employee.overtimeHours}
                     </td>
-                    <td className="border border-gray-300 p-2 ">
+                    <td className="border border-gray-300 p-2">
                       {formatCurrency(employee.totalSalary)}
                     </td>
                     <td className="border border-gray-300 p-2 flex justify-center">
                       <button
                         onClick={() => handleEdit(index)}
-                        className="cursor-pointer text-blue-500 hover:text-[#090367]"
+                        className="text-blue-600 hover:text-blue-800 mx-1"
                       >
                         <EditIcon />
                       </button>
                       <button
                         onClick={() => handleDelete(index)}
-                        className="cursor-pointer text-red-500 hover:text-[#EA0D10]"
+                        className="text-red-600 hover:text-red-800 mx-1"
                       >
                         <DeleteIcon />
                       </button>
@@ -331,8 +393,8 @@ const OvertimeManagement = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="text-center py-4 text-sm">
-                    No Employee Found.
+                  <td colSpan="6" className="text-center py-4 text-gray-700">
+                    No employees found.
                   </td>
                 </tr>
               )}
@@ -340,9 +402,6 @@ const OvertimeManagement = () => {
           </table>
         </div>
       </div>
-      <footer className="bg-white mt-32 p-4 rounded-md shadow-md">
-        <p>2024 Hospital Management System. All Rights Reserved.</p>
-      </footer>
     </div>
   );
 };
