@@ -132,9 +132,9 @@ function Login({ onLogin }) {
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
               >
                 {showPassword ? (
-                  <FaEyeSlash className="text-gray-500" /> // Eye slash icon when password is visible
+                  <FaEye className="text-gray-500" /> 
                 ) : (
-                  <FaEye className="text-gray-500" /> // Eye icon when password is hidden
+                  <FaEyeSlash className="text-gray-500" /> 
                 )}
               </button>
             </div>

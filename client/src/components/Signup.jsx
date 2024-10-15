@@ -141,9 +141,9 @@ function Signup() {
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? (
-                  <FaEyeSlash className="text-gray-500"  />
-                ) : (
                   <FaEye className="text-gray-500"  />
+                ) : (
+                  <FaEyeSlash className="text-gray-500"  />
                 )}
               </div>
             </div>
