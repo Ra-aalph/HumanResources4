@@ -179,7 +179,7 @@ const Benefits = () => {
       );
       const updatedBenefits = benefits.filter((_, i) => i !== index);
       setBenefits(updatedBenefits);
-      showNotification("Benefit deleted successfully!", "success");
+      showNotification("Employee's Benefits deleted successfully!", "success");
     } catch (error) {
       showNotification("Error deleting benefit", "error");
       console.error("Error deleting benefit:", error);

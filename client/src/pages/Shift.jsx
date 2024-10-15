@@ -117,7 +117,7 @@ const Shift = () => {
       await axios.delete(`http://localhost:8055/shifts/${shiftToDelete._id}`);
       const updatedShifts = shifts.filter((_, i) => i !== index);
       setShifts(updatedShifts);
-      showNotification("success", "Shift deleted successfully!");
+      showNotification("success", "Employee's Shift deleted successfully!");
     } catch (error) {
       console.error("Error deleting shift:", error);
       showNotification("error", "Error deleting shift. Please try again.");

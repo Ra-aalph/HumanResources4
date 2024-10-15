@@ -144,7 +144,7 @@ const OvertimeManagement = () => {
       );
       fetchEmployees();
       setNotification({
-        message: "Employee deleted successfully!",
+        message: "Employee's Overtime deleted successfully!",
         type: "success",
         show: true,
       });

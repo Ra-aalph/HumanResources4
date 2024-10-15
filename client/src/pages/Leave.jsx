@@ -128,7 +128,7 @@ const Leave = () => {
       setLeaves(leaves.filter((leave) => leave._id !== _id));
       setFilteredLeaves(filteredLeaves.filter((leave) => leave._id !== _id)); // Update filtered list
       setNotification({
-        message: "Leave deleted successfully!",
+        message: "Employee's Leave deleted successfully!",
         type: "success",
       });
     } catch (error) {

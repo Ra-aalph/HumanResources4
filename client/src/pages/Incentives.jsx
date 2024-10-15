@@ -124,7 +124,7 @@ const Incentives = () => {
       setEmployees((prevEmployees) =>
         prevEmployees.filter((_, i) => i !== index)
       );
-      showNotification("success", "Employee deleted successfully!"); // Show success notification
+      showNotification("success", "Employee's Incentives deleted successfully!"); // Show success notification
     } catch (error) {
       console.error("Error deleting employee:", error);
       showNotification("error", "Error deleting employee!"); // Show error notification
