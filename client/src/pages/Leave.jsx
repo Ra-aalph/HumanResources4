@@ -84,7 +84,7 @@ const Leave = () => {
           )
         );
         setNotification({
-          message: "Leave updated successfully!",
+          message: "Employee's Leave updated successfully!",
           type: "success",
         });
         setEditingId(null);
@@ -93,7 +93,7 @@ const Leave = () => {
         setLeaves([...leaves, { ...form, _id: response.data._id }]);
         setFilteredLeaves([...leaves, { ...form, _id: response.data._id }]); // For new data addition
         setNotification({
-          message: "Leave added successfully!",
+          message: "Employee's Leave added successfully!",
           type: "success",
         });
       }

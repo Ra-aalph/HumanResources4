@@ -83,7 +83,7 @@ const OvertimeManagement = () => {
           }
         );
         setNotification({
-          message: "Employee updated successfully!",
+          message: "Employee's Overtime updated successfully!",
           type: "success",
           show: true,
         });

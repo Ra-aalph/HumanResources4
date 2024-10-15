@@ -94,7 +94,7 @@ const Incentives = () => {
         updatedEmployees[editIndex] = updatedEmployee;
         setEmployees(updatedEmployees);
         setEditIndex(null); // Reset edit index after updating
-        showNotification("success", "Employee updated successfully!"); // Show success notification
+        showNotification("success", "Employee's Incentives updated successfully!"); // Show success notification
       } else {
         // Create new employee
         const newEmployee = { ...formData, totalSalary };
@@ -103,7 +103,7 @@ const Incentives = () => {
           newEmployee
         );
         setEmployees((prevEmployees) => [...prevEmployees, response.data]);
-        showNotification("success", "Employee added successfully!"); // Show success notification
+        showNotification("success", "Employee's Incentives added successfully!"); // Show success notification
       }
       setFormData({ name: "", position: "", salary: "", incentives: 0 });
     } catch (error) {

@@ -131,7 +131,7 @@ const Benefits = () => {
         };
         setBenefits(updatedBenefits);
         setEditIndex(null);
-        showNotification("Benefit updated successfully!", "success");
+        showNotification("Employee's Benefits updated successfully!", "success");
       } catch (error) {
         showNotification("Error updating benefit", "error");
         console.error("Error updating benefit:", error);
@@ -143,7 +143,7 @@ const Benefits = () => {
           benefitData
         );
         setBenefits([...benefits, response.data]);
-        showNotification("Benefit added successfully!", "success");
+        showNotification("Employee's Benefits added successfully!", "success");
       } catch (error) {
         showNotification("Error adding benefit", "error");
         console.error("Error adding benefit:", error);

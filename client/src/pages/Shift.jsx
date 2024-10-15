@@ -67,12 +67,12 @@ const Shift = () => {
         await axios.put(`http://localhost:8055/shifts/${editId}`, newShift);
         const updatedShifts = shifts.map((shift, index) => (index === editIndex ? { ...shift, ...newShift } : shift));
         setShifts(updatedShifts);
-        showNotification("success", "Shift updated successfully!");
+        showNotification("success", "Employee's Shift updated successfully!");
         resetForm();
       } else {
         const response = await axios.post("http://localhost:8055/shifts", newShift);
         setShifts([...shifts, response.data]);
-        showNotification("success", "Shift added successfully!");
+        showNotification("success", "Employee's Shift added successfully!");
         resetForm();
       }
     } catch (error) {
