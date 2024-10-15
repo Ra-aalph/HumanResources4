@@ -378,13 +378,13 @@ const OvertimeManagement = () => {
                     <td className="border border-gray-300 p-2 flex justify-center">
                       <button
                         onClick={() => handleEdit(index)}
-                        className="text-blue-600 hover:text-blue-800 mx-1"
+                        className="text-blue-500 hover:text-[#090367]"
                       >
                         <EditIcon />
                       </button>
                       <button
                         onClick={() => handleDelete(index)}
-                        className="text-red-600 hover:text-red-800 mx-1"
+                        className="text-red-500 hover:text-[#EA0D10]"
                       >
                         <DeleteIcon />
                       </button>
