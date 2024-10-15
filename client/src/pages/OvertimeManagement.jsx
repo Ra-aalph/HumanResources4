@@ -393,7 +393,7 @@ const OvertimeManagement = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center py-4 text-gray-700">
+                  <td colSpan={6} className="text-center py-4  text-sm">
                     No employees found.
                   </td>
                 </tr>
