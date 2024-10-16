@@ -309,8 +309,8 @@ const Incentives = () => {
               <tr className="bg-[#090367] text-white text-xs sm:text-sm leading-normal">
                 <th className="border px-4 sm:px-6 py-2">Employee's Name</th>
                 <th className="border px-4 sm:px-6 py-2">Position</th>
-                <th className="border px-4 sm:px-6 py-2">Rating</th>
                 <th className="border px-4 sm:px-6 py-2">Salary</th>
+                <th className="border px-4 sm:px-6 py-2">Rating</th>
                 <th className="border px-4 sm:px-6 py-2">Total Salary</th>
                 <th className="border px-4 sm:px-6 py-2">Actions</th>
               </tr>
@@ -327,6 +327,10 @@ const Incentives = () => {
                   <td className="border border-gray-300 p-2">
                     {employee.position}
                   </td>
+                 
+                  <td className="border border-gray-300 p-2">
+                    {formatCurrency(employee.salary)}
+                  </td>
                   <td className="border border-gray-300 p-2">
                     <div className=" flex space-x-1">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -340,9 +344,6 @@ const Incentives = () => {
                         />
                       ))}
                     </div>
-                  </td>
-                  <td className="border border-gray-300 p-2">
-                    {formatCurrency(employee.salary)}
                   </td>
                   <td className="border border-gray-300 p-2">
                     {formatCurrency(employee.totalSalary)}
