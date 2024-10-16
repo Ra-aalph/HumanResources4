@@ -258,7 +258,6 @@ const Incentives = () => {
               </select>
             </div>
             <div className="flex items-center">
-            
               <div>
                 <label className=" block text-sm font-medium mb-2 text-gray-700">
                   Incentives Rating:
@@ -378,7 +377,6 @@ const Incentives = () => {
           <p>2024 Hospital Management System. All Rights Reserved.</p>
         </footer>
       </div>
-      
     </div>
   );
 };
