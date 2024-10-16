@@ -277,7 +277,7 @@ const Shift = () => {
                 <th className="border px-4 sm:px-6 py-2">Position</th>
                 <th className="border px-4 sm:px-6 py-2">Shift Type</th>
                 <th className="border px-4 sm:px-6 py-2">Differential Rate</th>
-                <th className="border px-4 sm:px-6 py-2">Salary</th>
+                <th className="border px-4 sm:px-6 py-2">Total Salary</th>
                 <th className="border px-4 sm:px-6 py-2">Actions</th>
               </tr>
             </thead>
