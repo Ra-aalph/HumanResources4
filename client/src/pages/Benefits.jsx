@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   FaCheckCircle,
-  FaRegCircle,
+  FaTimesCircle,
   FaExclamationCircle,
 } from "react-icons/fa";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -423,35 +423,35 @@ const Benefits = () => {
                         {benefit.sss ? (
                           <FaCheckCircle className="text-green-600" />
                         ) : (
-                          <FaRegCircle className="text-gray-600" />
+                          <FaTimesCircle className="text-red-600" />
                         )}
                       </td>
                       <td className="border border-gray-300 p-2">
                         {benefit.pagIbig ? (
                           <FaCheckCircle className="text-green-600" />
                         ) : (
-                          <FaRegCircle className="text-gray-600" />
+                          <FaTimesCircle className="text-red-600" />
                         )}
                       </td>
                       <td className="border border-gray-300 p-2">
                         {benefit.philHealth ? (
                           <FaCheckCircle className="text-green-600" />
                         ) : (
-                          <FaRegCircle className="text-gray-600" />
+                          <FaTimesCircle className="text-red-600" />
                         )}
                       </td>
                       <td className="border border-gray-300 p-2">
                         {benefit.retirement ? (
                           <FaCheckCircle className="text-green-600" />
                         ) : (
-                          <FaRegCircle className="text-gray-600" />
+                          <FaTimesCircle className="text-red-600" />
                         )}
                       </td>
                       <td className="border border-gray-300 p-2">
                         {benefit.thirteenthMonth ? (
                           <FaCheckCircle className="text-green-600" />
                         ) : (
-                          <FaRegCircle className="text-gray-600" />
+                          <FaTimesCircle className="text-red-600" />
                         )}
                       </td>
                       <td className="border border-gray-300 p-2 flex justify-center">
