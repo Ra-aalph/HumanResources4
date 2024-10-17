@@ -7,13 +7,10 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; // Import ico
 import MedicalServicesOutlinedIcon from "@mui/icons-material/MedicalServicesOutlined";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
 
-const Sidebar = ({ isOpen, onLogout }) => {
-  const navigate = useNavigate(); // Use the useNavigate hook
+const Sidebar = ({ isOpen}) => {
 
-  const handleLogout = () => {
-    onLogout();
-    navigate("/login");
-  };
+
+  
 
   return (
     <div
