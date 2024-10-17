@@ -22,7 +22,7 @@ const EmployeeSchema = new mongoose.Schema({
             message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
         },
     },
-});
+},  { timestamps: true });
 
 // Pre-save hook to hash password
 EmployeeSchema.pre("save", async function (next) {
