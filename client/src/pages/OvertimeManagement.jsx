@@ -261,7 +261,7 @@ const OvertimeManagement = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
                 required
               >
-                <option value="">Select Position</option>
+                <option value="">Choose a Position</option>
                 {positions.map((position) => (
                   <option key={position.position} value={position.position}>
                     {position.position}
@@ -275,15 +275,14 @@ const OvertimeManagement = () => {
                 Base Salary
               </label>
               <input
-                type="number"
+                type="text" // Changed type to text to accommodate the formatted currency
                 placeholder="Base Salary"
                 name="baseSalary"
-                value={formData.baseSalary}
+                value={formatCurrency(formData.baseSalary)}
                 readOnly // Made read-only, will be set based on position selection
                 className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100"
               />
             </div>
-
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-700">
                 Overtime Hours
@@ -359,7 +358,10 @@ const OvertimeManagement = () => {
             <tbody className=" text-xs sm:text-sm">
               {filteredEmployees.length > 0 ? (
                 filteredEmployees.map((employee, index) => (
-                  <tr key={employee._id} className="text-xs sm:text-sm bg-white hover:bg-gray-100">
+                  <tr
+                    key={employee._id}
+                    className="text-xs sm:text-sm bg-white hover:bg-gray-100"
+                  >
                     <td className="border border-gray-300 p-2">
                       {employee.name}
                     </td>

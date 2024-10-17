@@ -219,7 +219,7 @@ const Leave = () => {
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
               >
-                <option value="">Choose a position</option>
+                <option value="">Choose a Position</option>
                 {positions.map((position) => (
                   <option key={position} value={position}>
                     {position}

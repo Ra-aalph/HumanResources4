@@ -214,8 +214,8 @@ const Shift = () => {
                 className="border border-gray-300 rounded p-2 mb-2 w-full focus:outline-none focus:ring-2 focus:ring-[#090367]"
                 required
               >
-                <option value="" disabled>
-                  Select Position
+                <option value="">
+                Choose a Position
                 </option>
                 {Object.keys(positions).map((position) => (
                   <option key={position} value={position}>
@@ -234,7 +234,7 @@ const Shift = () => {
                 type="text"
                 value={formatSalary(positions[employeePosition] || 0)}
                 readOnly
-                className="border border-gray-300 rounded p-2 mb-2 w-full focus:outline-none focus:ring-2 focus:ring-[#090367]"
+                className="border border-gray-300 rounded p-2 mb-2 w-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#090367]"
               />
             </div>
 

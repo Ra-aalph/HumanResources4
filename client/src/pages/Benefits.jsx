@@ -288,7 +288,7 @@ const Benefits = () => {
                   required
                   className="border border-gray-300 p-2 w-full mb-4 rounded focus:outline-none focus:ring-2 focus:ring-[#090367]"
                 >
-                  <option value="">Choose a position</option>
+                  <option value="">Choose a Position</option>
                   {positions.map((position, index) => (
                     <option key={index} value={position.name}>
                       {position.name}

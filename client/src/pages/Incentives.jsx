@@ -87,7 +87,7 @@ const Incentives = () => {
       [name]: value,
       salary:
         name === "position"
-          ? positions.find((pos) => pos.name === value).salary
+          ? positions.find((pos) => pos.name === value)?.salary || ""
           : prevData.salary,
     }));
   };
@@ -179,8 +179,14 @@ const Incentives = () => {
   };
 
   const formatCurrency = (amount) => {
-    return `₱${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+    // Convert amount to a number or default to 0 if undefined/null
+    const numberAmount = parseFloat(amount) || 0; 
+    return `₱${numberAmount.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
   };
+  
 
   return (
     <div className="bg-[#F0F0F0] mt-16 ">
@@ -249,7 +255,7 @@ const Incentives = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
                 required
               >
-                <option value="">Choose Position</option>
+                <option value="">Choose a Position</option>
                 {positions.map((pos) => (
                   <option key={pos.name} value={pos.name}>
                     {pos.name}
@@ -279,15 +285,15 @@ const Incentives = () => {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700">
-                Salary
+              Base Salary
               </label>
               <input
-                type="number"
+                type="text" // Change type to text for formatted currency display
                 name="salary"
-                value={formData.salary}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
-                disabled
+                value={formatCurrency(formData.salary)} // Use formatCurrency to display the formatted salary
+                onChange={handleChange} // Optional if you're allowing changes to the input
+                className="w-full px-3 py-2 border bg-gray-100 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#090367]"
+                disabled // Keep disabled if you don't want user edits
               />
             </div>
             <div className="mt-3 ml-8">
@@ -327,7 +333,7 @@ const Incentives = () => {
                   <td className="border border-gray-300 p-2">
                     {employee.position}
                   </td>
-                 
+
                   <td className="border border-gray-300 p-2">
                     {formatCurrency(employee.salary)}
                   </td>
