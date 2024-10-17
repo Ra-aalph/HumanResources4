@@ -248,7 +248,7 @@ const Shift = () => {
                 className="border border-gray-300 rounded p-2 mb-2 w-full focus:outline-none focus:ring-2 focus:ring-[#090367]"
                 required
               >
-                <option value="" disabled>
+                <option value="">
                   Select Shift Type
                 </option>
                 {Object.keys(shiftTypes).map((type) => (
