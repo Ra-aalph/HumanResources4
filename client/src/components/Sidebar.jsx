@@ -7,11 +7,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"; // Import ico
 import MedicalServicesOutlinedIcon from "@mui/icons-material/MedicalServicesOutlined";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
 
-const Sidebar = ({ isOpen}) => {
-
-
-  
-
+const Sidebar = ({ isOpen }) => {
   return (
     <div
       className={`fixed left-0 top-0 h-full bg-[#090367] text-white w-64 transform ${
@@ -48,9 +44,7 @@ const Sidebar = ({ isOpen}) => {
           className="flex items-center p-2 mt-5 hover:bg-[#EA0D10] rounded-md"
         >
           <AvTimerIcon />
-          <span className={`ml-4 ${!isOpen && "hidden"}`}>
-            Shift 
-          </span>
+          <span className={`ml-4 ${!isOpen && "hidden"}`}>Shift</span>
         </Link>
         <Link
           to="/incentives"
