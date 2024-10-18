@@ -326,7 +326,7 @@ const OvertimeManagement = () => {
                 type="text"
                 placeholder="Predicted Overtime"
                 name="predictedOvertime"
-                value={formatCurrency(formData.predictedOvertime)}
+                value={formData.predictedOvertime}
                 readOnly
                 className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100"
               />
