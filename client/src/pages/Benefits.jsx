@@ -473,7 +473,7 @@ const Benefits = () => {
                 ) : (
                   <tr>
                     <td colSpan="8" className="text-center py-4">
-                      No Employee Found.
+                    No Employee Found.
                     </td>
                   </tr>
                 )}

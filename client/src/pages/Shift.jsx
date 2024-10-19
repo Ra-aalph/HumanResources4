@@ -286,7 +286,7 @@ const Shift = () => {
               {filteredShifts.length === 0 ? (
                 <tr>
                   <td colSpan="8" className="text-center py-4 text-sm">
-                    No Employee Found
+                  No Employee Found.
                   </td>
                 </tr>
               ) : (

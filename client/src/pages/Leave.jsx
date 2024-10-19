@@ -337,8 +337,8 @@ const Leave = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="text-center p-4 text-gray-700">
-                    No employee found.
+                  <td colSpan="8" className="text-center py-4">
+                  No Employee Found.
                   </td>
                 </tr>
               )}

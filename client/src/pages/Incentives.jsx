@@ -373,7 +373,7 @@ const Incentives = () => {
               {filteredEmployees.length === 0 && (
                 <tr>
                   <td colSpan={6} className="text-center py-4  text-sm">
-                    No employee found.
+                  No Employee Found.
                   </td>
                 </tr>
               )}
