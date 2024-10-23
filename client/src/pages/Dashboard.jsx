@@ -186,7 +186,7 @@ const Dashboard = () => {
         <h1 className="text-4xl font-bold mt-2">Welcome, Juan Dela Cruz!</h1>
       </div>
 
-      <div className="bg-[#F0F0F0] grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 p-4">
+      <div className="bg-[#F0F0F0] grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         {/* Compensation Section */}
         <div className="p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-2xl font-bold mb-2">Compensation</h2>
