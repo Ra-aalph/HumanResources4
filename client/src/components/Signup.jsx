@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing Font Awesome eye icons
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Nodado from "../images/logo.png";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Using MUI icon
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-  const [errorMessage, setErrorMessage] = useState(""); // For error messages
-  const [successMessage, setSuccessMessage] = useState(""); // For success messages
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to toggle modal
-  const [agreed, setAgreed] = useState(false); // State to track if user agreed to terms
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,7 +22,7 @@ function Signup() {
       setErrorMessage("You must agree to the Terms and Conditions to sign up.");
       return;
     }
-    setErrorMessage(""); // Reset error message
+    setErrorMessage("");
 
     try {
       const response = await axios.post("http://localhost:8055/register", {
@@ -34,8 +34,8 @@ function Signup() {
       setSuccessMessage("Sign Up Successful! Redirecting to login...");
 
       setTimeout(() => {
-        setSuccessMessage(""); // Clear message
-        navigate("/login"); // Navigate to login
+        setSuccessMessage("");
+        navigate("/login");
       }, 3000);
     } catch (error) {
       console.error("Signup error:", error);
@@ -72,12 +72,10 @@ function Signup() {
           </div>
         </div>
 
-        {/* Error message */}
         {errorMessage && (
           <div className="mb-4 text-[#EA0D10] text-center">{errorMessage}</div>
         )}
 
-        {/* Success message */}
         {successMessage && (
           <div className="mb-4 text-green-600 flex items-center justify-center">
             <CheckCircleIcon className="mr-2" /> {successMessage}
@@ -128,28 +126,26 @@ function Signup() {
             </label>
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} // Toggle input type
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
                 name="password"
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              {/* Toggle show/hide password icon */}
               <div
                 className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? (
-                  <FaEye className="text-gray-500"  />
+                  <FaEye className="text-gray-500" />
                 ) : (
-                  <FaEyeSlash className="text-gray-500"  />
+                  <FaEyeSlash className="text-gray-500" />
                 )}
               </div>
             </div>
           </div>
 
-          {/* Terms and Conditions checkbox */}
           <div className="mb-4">
             <input
               type="checkbox"
@@ -195,52 +191,47 @@ function Signup() {
       </div>
 
       {/* Terms and Conditions Modal */}
-      {isModalOpen && (
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-500 ease-in-out ${
+          isModalOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      >
         <div
-          className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-500 ease-in-out ${
-            isModalOpen ? "opacity-100" : "opacity-0"
+          className={`bg-white rounded-lg p-6 max-w-3xl w-full mx-4 transform transition-transform duration-500 ease-in-out ${
+            isModalOpen ? "scale-100" : "scale-95"
           }`}
         >
-          <div
-            className={`bg-white rounded-lg p-6 max-w-3xl w-full mx-4 transform transition-transform duration-500 ease-in-out ${
-              isModalOpen ? "scale-100" : "scale-95"
-            }`}
-          >
-            <h2 className="text-xl font-bold mb-4">Terms and Conditions</h2>
-            <p className="mb-4">
-              Welcome to our website. By signing up, you agree to comply with
-              and be bound by these Terms and Conditions...
-            </p>
-            <h3 className="text-lg font-semibold mb-2">
-              1. Use of the Website
-            </h3>
-            <p className="mb-4">[Terms text goes here]</p>
-            <h3 className="text-lg font-semibold mb-2">2. Privacy Policy</h3>
-            <p className="mb-4">[Privacy policy text]</p>
+          <h2 className="text-xl font-bold mb-4">Terms and Conditions</h2>
+          <p className="mb-4">
+            Welcome to our website. By signing up, you agree to comply with and
+            be bound by these Terms and Conditions...
+          </p>
+          <h3 className="text-lg font-semibold mb-2">1. Use of the Website</h3>
+          <p className="mb-4">[Terms text goes here]</p>
+          <h3 className="text-lg font-semibold mb-2">2. Privacy Policy</h3>
+          <p className="mb-4">[Privacy policy text]</p>
 
-            {/* Checkbox inside the modal */}
-            <div className="mb-4">
-              <input
-                type="checkbox"
-                id="modalAgree"
-                checked={agreed} // link it to the same 'agreed' state
-                onChange={(e) => setAgreed(e.target.checked)}
-                className="mr-2"
-              />
-              <label htmlFor="modalAgree" className="text-sm text-gray-700">
-                I have read and agree to the Terms and Conditions.
-              </label>
-            </div>
-
-            <button
-              className="mt-4 px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-[#090367]"
-              onClick={toggleModal}
-            >
-              Close
-            </button>
+          <div className="mb-4">
+            <input
+              type="checkbox"
+              id="modalAgree"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="mr-2"
+            />
+            <label htmlFor="modalAgree" className="text-sm text-gray-700">
+              I have read and agree to the Terms and Conditions.
+            </label>
           </div>
+
+          <button
+            className="mt-4 px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-[#090367]"
+            onClick={toggleModal}
+          >
+            Close
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }

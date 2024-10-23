@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IconButton } from "@mui/material";
-import { Menu as MenuIcon, AccountCircle, ExpandMore, Person, ExitToApp } from "@mui/icons-material"; 
+import { Menu as MenuIcon, AccountCircle, ExpandMore, Person, ExitToApp } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ toggleSidebar, onLogout }) => {
@@ -74,8 +74,12 @@ const Header = ({ toggleSidebar, onLogout }) => {
 
         {/* Logout Confirmation Dialog */}
         {openLogoutDialog && (
-          <div className={`fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 transition-opacity duration-300 ${showDialog ? 'opacity-100' : 'opacity-0'}`}>
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md transition-transform duration-300 transform ${showDialog ? 'scale-100' : 'scale-95'}">
+          <div
+            className={`fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 transition-opacity duration-300 ease-in-out ${showDialog ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+          >
+            <div
+              className={`bg-white p-6 rounded-lg shadow-lg w-full max-w-md transform transition-transform duration-300 ease-in-out ${showDialog ? 'scale-100' : 'scale-95'}`}
+            >
               <h2 className="text-lg font-semibold mb-4 text-black">Are you sure you want to logout?</h2>
               <p className="text-gray-700 mb-6">
                 You will be redirected to the login page after logging out.
