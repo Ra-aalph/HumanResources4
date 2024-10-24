@@ -7,7 +7,7 @@ const BenefitsSchema = new mongoose.Schema(
     sss: { type: Boolean, default: false },
     pagIbig: { type: Boolean, default: false },
     philHealth: { type: Boolean, default: false },
-    retirement: { type: Boolean, default: false },
+    leave: { type: Boolean, default: false },
     thirteenthMonth: { type: Boolean, default: false },
   },
   { timestamps: true }

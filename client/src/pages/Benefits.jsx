@@ -15,7 +15,7 @@ const Benefits = () => {
   const [ssSChecked, setSssChecked] = useState(false);
   const [pagIbigChecked, setPagIbigChecked] = useState(false);
   const [philHealthChecked, setPhilHealthChecked] = useState(false);
-  const [retirementChecked, setRetirementChecked] = useState(false);
+  const [leaveChecked, setLeaveChecked] = useState(false);
   const [thirteenthMonthChecked, setThirteenthMonthChecked] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // Search state
@@ -32,7 +32,7 @@ const Benefits = () => {
         sss: true,
         pagIbig: true,
         philHealth: true,
-        retirement: true,
+        leave: true,
         thirteenthMonth: true,
       },
     },
@@ -42,7 +42,7 @@ const Benefits = () => {
         sss: true,
         pagIbig: true,
         philHealth: true,
-        retirement: true,
+        leave: true,
         thirteenthMonth: true,
       },
     },
@@ -52,7 +52,7 @@ const Benefits = () => {
         sss: true,
         pagIbig: true,
         philHealth: true,
-        retirement: true,
+        leave: true,
         thirteenthMonth: true,
       },
     },
@@ -62,7 +62,7 @@ const Benefits = () => {
         sss: true,
         pagIbig: true,
         philHealth: true,
-        retirement: true,
+        leave: true,
         thirteenthMonth: true,
       },
     },
@@ -72,7 +72,7 @@ const Benefits = () => {
         sss: true,
         pagIbig: true,
         philHealth: true,
-        retirement: true,
+        leave: true,
         thirteenthMonth: true,
       },
     },
@@ -90,7 +90,7 @@ const Benefits = () => {
       setSssChecked(selectedPosition.benefits.sss);
       setPagIbigChecked(selectedPosition.benefits.pagIbig);
       setPhilHealthChecked(selectedPosition.benefits.philHealth);
-      setRetirementChecked(selectedPosition.benefits.retirement);
+      setLeaveChecked(selectedPosition.benefits.leave);
       setThirteenthMonthChecked(selectedPosition.benefits.thirteenthMonth);
     } else {
       resetCheckboxes();
@@ -114,7 +114,7 @@ const Benefits = () => {
       sss: ssSChecked,
       pagIbig: pagIbigChecked,
       philHealth: philHealthChecked,
-      retirement: retirementChecked,
+      leave: leaveChecked,
       thirteenthMonth: thirteenthMonthChecked,
     };
 
@@ -159,7 +159,7 @@ const Benefits = () => {
     setSssChecked(benefit.sss);
     setPagIbigChecked(benefit.pagIbig);
     setPhilHealthChecked(benefit.philHealth);
-    setRetirementChecked(benefit.retirement);
+    setLeaveChecked(benefit.leave);
     setThirteenthMonthChecked(benefit.thirteenthMonth);
     setEditIndex(index);
   };
@@ -197,7 +197,7 @@ const Benefits = () => {
     setSssChecked(false);
     setPagIbigChecked(false);
     setPhilHealthChecked(false);
-    setRetirementChecked(false);
+    setLeaveChecked(false);
     setThirteenthMonthChecked(false);
   };
 
@@ -349,17 +349,17 @@ const Benefits = () => {
                   </div>
                   <div className="flex items-center">
                     <input
-                      id="retirement"
+                      id="leave"
                       type="checkbox"
-                      checked={retirementChecked}
-                      onChange={(e) => setRetirementChecked(e.target.checked)}
+                      checked={leaveChecked}
+                      onChange={(e) => setLeaveChecked(e.target.checked)}
                       className="focus:ring-[#389485] text-[#389485] border-gray-300 rounded"
                     />
                     <label
-                      htmlFor="retirement"
+                      htmlFor="leave"
                       className="ml-2 block text-sm text-gray-900"
                     >
-                      Retirement
+                      leave
                     </label>
                   </div>
                   <div className="flex items-center">
@@ -401,7 +401,7 @@ const Benefits = () => {
                   <th className="border px-4 sm:px-6 py-2">SSS</th>
                   <th className="border px-4 sm:px-6 py-2">Pag-Ibig</th>
                   <th className="border px-4 sm:px-6 py-2">PhilHealth</th>
-                  <th className="border px-4 sm:px-6 py-2">Retirement</th>
+                  <th className="border px-4 sm:px-6 py-2">Leave</th>
                   <th className="border px-4 sm:px-6 py-2">13th Month</th>
                   <th className="border px-4 sm:px-6 py-2">Actions</th>
                 </tr>
@@ -441,7 +441,7 @@ const Benefits = () => {
                         )}
                       </td>
                       <td className="border border-gray-300 p-2">
-                        {benefit.retirement ? (
+                        {benefit.leave ? (
                           <FaCheckCircle className="text-green-600" />
                         ) : (
                           <FaTimesCircle className="text-red-600" />
