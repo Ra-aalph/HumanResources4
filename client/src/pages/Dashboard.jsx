@@ -80,24 +80,24 @@ const Dashboard = () => {
 
   // Employee Benefits Data
   const benefitsData = {
-    labels: ["SSS", "Pag-IBIG", "PhilHealth", "Retirement", "13th Month"],
+    labels: ["SSS", "Pag-Ibig", "PhilHealth", "Retirement", "13th Month"],
     datasets: [
       {
         label: "Benefits",
         data: [6, 6, 6, 6, 6],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.6)",
-          "rgba(54, 162, 235, 0.6)",
-          "rgba(255, 206, 86, 0.6)",
-          "rgba(75, 192, 192, 0.6)",
-          "rgba(153, 102, 255, 0.6)",
+          "rgba(0, 47, 108, 1)",
+          "rgba(255, 204, 0, 1)",
+          "rgba(0, 128, 0, 1)",
+          "rgba(205, 127, 50, 1)",
+          "rgba(147, 112, 219, 1)",
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
+          "rgba(0, 47, 108, 1)",
+          "rgba(255, 204, 0, 1)",
+          "rgba(0, 128, 0, 1)",
+          "rgba(205, 127, 50, 1)",
+          "rgba(147, 112, 219, 1)",
         ],
         borderWidth: 1,
       },
