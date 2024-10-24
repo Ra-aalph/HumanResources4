@@ -80,7 +80,7 @@ const Dashboard = () => {
 
   // Employee Benefits Data
   const benefitsData = {
-    labels: ["SSS", "Pag-Ibig", "PhilHealth", "Retirement", "13th Month"],
+    labels: ["SSS", "Pag-Ibig", "PhilHealth", "Paid Leave", "13th Month"],
     datasets: [
       {
         label: "Benefits",
