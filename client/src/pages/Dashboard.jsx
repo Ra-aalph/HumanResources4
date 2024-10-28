@@ -183,7 +183,7 @@ const Dashboard = () => {
       {/* Welcome Message */}
       <div className="bg-white mt-16 p-6 rounded-md shadow-lg">
         <p className="text-xl text-[#090367] font-semibold">Dashboard</p>
-        <h1 className="text-4xl font-bold mt-2">Welcome, Juan Dela Cruz!</h1>
+        
       </div>
 
       <div className="bg-[#F0F0F0] grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
