@@ -28,7 +28,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: "Overtime Hours (This Month)",
-        data: [5, 2, 7, 10],
+        data: [3, 3, 8, 4],
         backgroundColor: "rgba(75, 192, 192, 0.6)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -56,7 +56,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: "Ratings (1-5)",
-        data: [5, 3, 4, 2],
+        data: [4, 3, 5, 2],
         backgroundColor: "rgba(153, 102, 255, 0.6)",
         borderColor: "rgba(153, 102, 255, 1)",
         borderWidth: 1,
@@ -183,7 +183,6 @@ const Dashboard = () => {
       {/* Welcome Message */}
       <div className="bg-white mt-16 p-6 rounded-md shadow-lg">
         <p className="text-xl text-[#090367] font-semibold">Dashboard</p>
-        
       </div>
 
       <div className="bg-[#F0F0F0] grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
