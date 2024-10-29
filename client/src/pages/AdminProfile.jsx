@@ -8,7 +8,6 @@ const AdminProfile = () => {
   const [adminDetails, setAdminDetails] = useState({
     name: "Juan Dela Cruz",
     email: "adminhr@nodadohospital.com",
-    phone: "+1234567890",
     position: "HR Admin",
     profilePicture: Profile, // Use the imported image
   });
@@ -101,10 +100,6 @@ const AdminProfile = () => {
           <div className="flex items-center mt-2">
             <FaEnvelope className="text-gray-600 mr-2" />
             <span className="text-gray-800">{adminDetails.email}</span>
-          </div>
-          <div className="flex items-center mt-2">
-            <FaPhone className="text-gray-600 mr-2" />
-            <span className="text-gray-800">{adminDetails.phone}</span>
           </div>
         </div>
         <div className="flex space-x-2 mt-4">
