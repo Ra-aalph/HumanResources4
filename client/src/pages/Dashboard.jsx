@@ -33,6 +33,42 @@ const Dashboard = () => {
   const [shiftCounts, setShiftCounts] = useState({});
   const [leaveCounts, setLeaveCounts] = useState({});
   const [overtimeData, setOvertimeData] = useState({ labels: [], data: [] });
+  const [benefitsData, setBenefitsData] = useState({
+    labels: ["SSS", "Pag-Ibig", "PhilHealth", "Paid Leave", "13th Month"],
+    datasets: [
+      {
+        label: "Benefits",
+        data: [0, 0, 0, 0, 0], // Initialize with zeros
+        backgroundColor: [
+          "rgba(0, 47, 108, 1)",
+          "rgba(255, 204, 0, 1)",
+          "rgba(0, 128, 0, 1)",
+          "rgba(205, 127, 50, 1)",
+          "rgba(147, 112, 219, 1)",
+        ],
+        borderColor: [
+          "rgba(0, 47, 108, 1)",
+          "rgba(255, 204, 0, 1)",
+          "rgba(0, 128, 0, 1)",
+          "rgba(205, 127, 50, 1)",
+          "rgba(147, 112, 219, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  });
+  const [ratingsData, setRatingsData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Incentives Ratings",
+        data: [],
+        backgroundColor: "rgba(153, 102, 255, 0.6)",
+        borderColor: "rgba(153, 102, 255, 1)",
+        borderWidth: 1,
+      },
+    ],
+  });
 
   useEffect(() => {
     const fetchShiftCounts = async () => {
@@ -69,16 +105,13 @@ const Dashboard = () => {
       try {
         const response = await fetch("http://localhost:8055/overtimes");
         const data = await response.json();
-
-        // Extract names and overtime hours from the fetched data
         const sortedData = data
-          .sort((a, b) => b.overtimeHours - a.overtimeHours) // Sort by overtime hours in descending order
-          .slice(0, 4); // Take the top 4 entries
+          .sort((a, b) => b.overtimeHours - a.overtimeHours)
+          .slice(0, 4);
 
-        const labels = sortedData.map(item => item.name); // Assuming 'name' is the field for employee name
-        const overtimeHours = sortedData.map(item => item.overtimeHours); // Assuming 'overtimeHours' is the field for hours
+        const labels = sortedData.map(item => item.name);
+        const overtimeHours = sortedData.map(item => item.overtimeHours);
 
-        // Update the state with the fetched data
         setOvertimeData({
           labels,
           data: overtimeHours,
@@ -88,12 +121,81 @@ const Dashboard = () => {
       }
     };
 
+    const fetchBenefitsData = async () => {
+      try {
+        const response = await fetch("http://localhost:8055/benefits");
+        const data = await response.json();
+
+        // Extracting the required benefit values
+        const sssCount = data.reduce((acc, benefit) => acc + benefit.sss, 0);
+        const pagIbigCount = data.reduce((acc, benefit) => acc + benefit.pagIbig, 0);
+        const philHealthCount = data.reduce((acc, benefit) => acc + benefit.philHealth, 0);
+        const leaveCount = data.reduce((acc, benefit) => acc + benefit.leave, 0);
+        const thirteenthMonthCount = data.reduce((acc, benefit) => acc + benefit.thirteenthMonth, 0);
+
+        // Update the benefits chart data
+        setBenefitsData(prevState => ({
+          ...prevState,
+          datasets: [
+            {
+              ...prevState.datasets[0],
+              data: [
+                sssCount,
+                pagIbigCount,
+                philHealthCount,
+                leaveCount,
+                thirteenthMonthCount,
+              ],
+            },
+          ],
+        }));
+      } catch (error) {
+        console.error("Error fetching benefits data:", error);
+      }
+    };
+
+    // New function to fetch incentives data
+    const fetchIncentivesData = async () => {
+      try {
+        const response = await fetch("http://localhost:8055/incentives");
+        const data = await response.json();
+
+        // Extracting names and incentives for the ratings graph
+        const incentivesData = data.map(item => ({
+          name: item.name,
+          incentives: item.incentives,
+        }));
+
+        // Sort by incentives and get top 4
+        const topIncentives = incentivesData
+          .sort((a, b) => b.incentives - a.incentives)
+          .slice(0, 4);
+
+        const names = topIncentives.map(item => item.name);
+        const incentives = topIncentives.map(item => item.incentives);
+
+        setRatingsData({
+          labels: names,
+          datasets: [
+            {
+              ...ratingsData.datasets[0],
+              data: incentives,
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Error fetching incentives data:", error);
+      }
+    };
+
     fetchShiftCounts();
     fetchLeaveCounts();
-    fetchOvertimeData(); // Fetch overtime data on component mount
+    fetchOvertimeData();
+    fetchBenefitsData();
+    fetchIncentivesData(); // Fetch incentives data on component mount
   }, []);
 
-  // Chart data for Overtime
+  // Overtime Chart Data (Unchanged)
   const overtimeChartData = {
     labels: overtimeData.labels,
     datasets: [
@@ -116,23 +218,9 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: "Overtime Hours Graph",
+        text: "Employee's Overtime Hours Graph",
       },
     },
-  };
-
-  // Employee Ratings Data (Unchanged)
-  const ratingsData = {
-    labels: ["Jose Manalo", "Coco Martin", "Vic Sotto", "Lebron James"],
-    datasets: [
-      {
-        label: "Ratings (1-5)",
-        data: [4, 3, 5, 2],
-        backgroundColor: "rgba(153, 102, 255, 0.6)",
-        borderColor: "rgba(153, 102, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
   };
 
   const ratingsOptions = {
@@ -149,32 +237,6 @@ const Dashboard = () => {
     },
   };
 
-  // Employee Benefits Data (Unchanged)
-  const benefitsData = {
-    labels: ["SSS", "Pag-Ibig", "PhilHealth", "Paid Leave", "13th Month"],
-    datasets: [
-      {
-        label: "Benefits",
-        data: [6, 6, 6, 6, 6],
-        backgroundColor: [
-          "rgba(0, 47, 108, 1)",
-          "rgba(255, 204, 0, 1)",
-          "rgba(0, 128, 0, 1)",
-          "rgba(205, 127, 50, 1)",
-          "rgba(147, 112, 219, 1)",
-        ],
-        borderColor: [
-          "rgba(0, 47, 108, 1)",
-          "rgba(255, 204, 0, 1)",
-          "rgba(0, 128, 0, 1)",
-          "rgba(205, 127, 50, 1)",
-          "rgba(147, 112, 219, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
   const benefitsOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -184,12 +246,11 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: "Benefits Distribution Graph",
+        text: "Employee's Benefits Distribution Graph",
       },
     },
   };
 
-  // Function to get status color (Unchanged)
   const getStatusColor = (status) => {
     switch (status) {
       case "Approved":
@@ -201,7 +262,6 @@ const Dashboard = () => {
         return "bg-yellow-200 text-yellow-800";
     }
   };
-
   return (
     <div className="bg-[#F0F0F0]">
       {/* Welcome Message */}
@@ -267,7 +327,7 @@ const Dashboard = () => {
 
         {/* Benefits Section */}
         <div className="p-4 bg-white shadow-md rounded-lg">
-          <h2 className="text-2xl font-bold mb-2">Benefits</h2>
+        <h2 className="text-2xl font-bold mb-2">Benefits</h2>
           <div className="mb-4" style={{ height: "400px" }}>
             <Pie data={benefitsData} options={benefitsOptions} />
           </div>
@@ -276,7 +336,7 @@ const Dashboard = () => {
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4 flex items-center">
               <FaUsers className="mr-2" />
-              Leave Requests
+              Employee's Leave Requests
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
