@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,6 +10,14 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
+import { FaUsers } from "react-icons/fa";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+import FlagIcon from "@mui/icons-material/Flag";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 ChartJS.register(
   CategoryScale,
@@ -22,13 +30,76 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  // Overtime Data
-  const overtimeData = {
-    labels: ["Jose Manalo", "Coco Martin", "Vic Sotto", "Lebron James"],
+  const [shiftCounts, setShiftCounts] = useState({});
+  const [leaveCounts, setLeaveCounts] = useState({});
+  const [overtimeData, setOvertimeData] = useState({ labels: [], data: [] });
+
+  useEffect(() => {
+    const fetchShiftCounts = async () => {
+      try {
+        const response = await fetch("http://localhost:8055/shifts");
+        const data = await response.json();
+        const counts = data.reduce((acc, shift) => {
+          const { shiftType } = shift;
+          acc[shiftType] = (acc[shiftType] || 0) + 1;
+          return acc;
+        }, {});
+        setShiftCounts(counts);
+      } catch (error) {
+        console.error("Error fetching shift counts:", error);
+      }
+    };
+
+    const fetchLeaveCounts = async () => {
+      try {
+        const response = await fetch("http://localhost:8055/leaves");
+        const data = await response.json();
+        const counts = data.reduce((acc, leave) => {
+          const { status } = leave;
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {});
+        setLeaveCounts(counts);
+      } catch (error) {
+        console.error("Error fetching leave counts:", error);
+      }
+    };
+
+    const fetchOvertimeData = async () => {
+      try {
+        const response = await fetch("http://localhost:8055/overtimes");
+        const data = await response.json();
+
+        // Extract names and overtime hours from the fetched data
+        const sortedData = data
+          .sort((a, b) => b.overtimeHours - a.overtimeHours) // Sort by overtime hours in descending order
+          .slice(0, 4); // Take the top 4 entries
+
+        const labels = sortedData.map(item => item.name); // Assuming 'name' is the field for employee name
+        const overtimeHours = sortedData.map(item => item.overtimeHours); // Assuming 'overtimeHours' is the field for hours
+
+        // Update the state with the fetched data
+        setOvertimeData({
+          labels,
+          data: overtimeHours,
+        });
+      } catch (error) {
+        console.error("Error fetching overtime data:", error);
+      }
+    };
+
+    fetchShiftCounts();
+    fetchLeaveCounts();
+    fetchOvertimeData(); // Fetch overtime data on component mount
+  }, []);
+
+  // Chart data for Overtime
+  const overtimeChartData = {
+    labels: overtimeData.labels,
     datasets: [
       {
         label: "Overtime Hours (This Month)",
-        data: [3, 3, 8, 4],
+        data: overtimeData.data,
         backgroundColor: "rgba(75, 192, 192, 0.6)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -50,7 +121,7 @@ const Dashboard = () => {
     },
   };
 
-  // Employee Ratings Data
+  // Employee Ratings Data (Unchanged)
   const ratingsData = {
     labels: ["Jose Manalo", "Coco Martin", "Vic Sotto", "Lebron James"],
     datasets: [
@@ -78,7 +149,7 @@ const Dashboard = () => {
     },
   };
 
-  // Employee Benefits Data
+  // Employee Benefits Data (Unchanged)
   const benefitsData = {
     labels: ["SSS", "Pag-Ibig", "PhilHealth", "Paid Leave", "13th Month"],
     datasets: [
@@ -118,63 +189,16 @@ const Dashboard = () => {
     },
   };
 
-  // Leave List Data
-  const leaveData = [
-    {
-      name: "Jose Manalo",
-      position: "Nurse",
-      type: "Sick Leave",
-      startDate: "10/01/2024",
-      endDate: "10/05/2024",
-      status: "Approved",
-    },
-    {
-      name: "Lebron James",
-      position: "Doctor",
-      type: "Vacation Leave",
-      startDate: "09/15/2024",
-      endDate: "09/15/2024",
-      status: "Pending",
-    },
-    {
-      name: "Kai Sotto",
-      position: "Nurse",
-      type: "Vacation Leave",
-      startDate: "10/19/2024",
-      endDate: "10/25/2024",
-      status: "Rejected",
-    },
-  ];
-
-  // Shift Differential Data
-  const shiftData = [
-    {
-      name: "Jose Manalo",
-      position: "Nurse",
-      shiftType: "Night Shift",
-    },
-    {
-      name: "Lebron James",
-      position: "Doctor",
-      shiftType: "Weekend Shift",
-    },
-    {
-      name: "Coco Martin",
-      position: "Nurse",
-      shiftType: "Holiday Shift",
-    },
-  ];
-
-  // Function to get status color
+  // Function to get status color (Unchanged)
   const getStatusColor = (status) => {
     switch (status) {
       case "Approved":
-        return "bg-green-200 text-green-800"; // Green color for Approved
+        return "bg-green-200 text-green-800";
       case "Rejected":
-        return "bg-red-200 text-red-800"; // Red color for Rejected
+        return "bg-red-200 text-red-800";
       case "Pending":
       default:
-        return "bg-yellow-200 text-yellow-800"; // Yellow color for Pending
+        return "bg-yellow-200 text-yellow-800";
     }
   };
 
@@ -190,38 +214,54 @@ const Dashboard = () => {
         <div className="p-4 bg-white shadow-md rounded-lg">
           <h2 className="text-2xl font-bold mb-2">Compensation</h2>
           <div className="mb-4" style={{ height: "200px" }}>
-            <Bar data={overtimeData} options={overtimeOptions} />
+            <Bar data={overtimeChartData} options={overtimeOptions} />
           </div>
           <div className="mb-4" style={{ height: "200px" }}>
             <Bar data={ratingsData} options={ratingsOptions} />
           </div>
 
-          {/* Shift Differential Management Table */}
-          <div className="mt-4">
-            <h3 className="text-md font-semibold mb-2">
-              Employee Shift Differential List
+          {/* Shift Counts Display */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-4 flex items-center">
+              <FaUsers className="mr-2" />
+              Employee's Shift Counts
             </h3>
-            <table className="min-w-full bg-white shadow-md rounded-lg">
-              <thead className="bg-gray-100">
-                <tr className="bg-[#090367] text-white text-xs sm:text-sm leading-normal">
-                  <th className="py-1 px-2 border">Employee Name</th>
-                  <th className="py-1 px-2 border">Position</th>
-                  <th className="py-1 px-2 border">Shift Type</th>
-                </tr>
-              </thead>
-              <tbody className="text-xs sm:text-sm">
-                {shiftData.map((shift, index) => (
-                  <tr
-                    key={index}
-                    className="text-xs sm:text-sm bg-white hover:bg-gray-100"
-                  >
-                    <td className="py-1 px-2 border">{shift.name}</td>
-                    <td className="py-1 px-2 border">{shift.position}</td>
-                    <td className="py-1 px-2 border">{shift.shiftType}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {Object.entries(shiftCounts).map(([shiftType, count]) => (
+                <div
+                  key={shiftType}
+                  className="flex items-center p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  {/* Conditional Icons */}
+                  {shiftType === "Regular Shift" && (
+                    <AccessTimeIcon
+                      className="mr-3 text-blue-600"
+                      fontSize="large"
+                    />
+                  )}
+                  {shiftType === "Night Shift" && (
+                    <NightlightIcon
+                      className="mr-3 text-indigo-700"
+                      fontSize="large"
+                    />
+                  )}
+                  {shiftType === "Weekend Shift" && (
+                    <WbSunnyIcon
+                      className="mr-3 text-yellow-600"
+                      fontSize="large"
+                    />
+                  )}
+                  {shiftType === "Holiday Shift" && (
+                    <FlagIcon className="mr-3 text-red-600" fontSize="large" />
+                  )}
+
+                  <span className="text-base font-medium">
+                    {shiftType}: <span className="font-bold">{count}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -232,45 +272,41 @@ const Dashboard = () => {
             <Pie data={benefitsData} options={benefitsOptions} />
           </div>
 
-          {/* Leave Management Table */}
-          <h3 className="text-md font-semibold mb-2">Employee Leave List</h3>
-          <div className="overflow-x-auto bg-white rounded-lg shadow-md table-container">
-           
-            <table className="min-w-full bg-white shadow-md rounded-lg">
-              <thead className="bg-gray-100">
-                <tr className="bg-[#090367] text-white text-xs sm:text-sm leading-normal">
-                  <th className="py-1 px-2 border">Employee Name</th>
-                  <th className="py-1 px-2 border">Position</th>
-                  <th className="py-1 px-2 border">Leave Type</th>
-                  <th className="py-1 px-2 border">Start</th>
-                  <th className="py-1 px-2 border">End</th>
-                  <th className="py-1 px-2 border">Status</th>
-                </tr>
-              </thead>
-              <tbody className="text-xs sm:text-sm">
-                {leaveData.map((leave, index) => (
-                  <tr
-                    key={index}
-                    className="text-xs sm:text-sm bg-white hover:bg-gray-100"
-                  >
-                    <td className="py-1 px-2 border">{leave.name}</td>
-                    <td className="py-1 px-2 border">{leave.position}</td>
-                    <td className="py-1 px-2 border">{leave.type}</td>
-                    <td className="py-1 px-2 border">{leave.startDate}</td>
-                    <td className="py-1 px-2 border">{leave.endDate}</td>
-                    <td className={`py-1 px-2 border ${getStatusColor(leave.status)}`}>
-                      {leave.status}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Leave Counts Display */}
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-4 flex items-center">
+              <FaUsers className="mr-2" />
+              Leave Requests
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {Object.entries(leaveCounts).map(([status, count]) => (
+                <div
+                  key={status}
+                  className={`flex items-center p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ${getStatusColor(
+                    status
+                  )}`}
+                >
+                  {/* Conditional Icons */}
+                  {status === "Approved" && (
+                    <CheckCircleIcon className="mr-3" fontSize="large" />
+                  )}
+                  {status === "Rejected" && (
+                    <CancelIcon className="mr-3" fontSize="large" />
+                  )}
+                  {status === "Pending" && (
+                    <HourglassEmptyIcon className="mr-3" fontSize="large" />
+                  )}
+
+                  <span className="text-base font-medium">
+                    {status}: <span className="font-bold">{count}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <footer className="bg-white mt-32 p-4 rounded-md shadow-md">
-        <p>2024 Hospital Management System. All Rights Reserved.</p>
-      </footer>
     </div>
   );
 };
